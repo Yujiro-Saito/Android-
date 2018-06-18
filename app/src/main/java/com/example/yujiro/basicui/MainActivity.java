@@ -2,43 +2,47 @@ package com.example.yujiro.basicui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
-import android.view.View;
 
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView textView;
-    private boolean flag = false;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Buttonの設定
-        Button button = findViewById(R.id.button);
-
-        //TextViewの設定
         textView = findViewById(R.id.text_view);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (flag) {
-                    textView.setText("Hello");
-                    flag = false;
+        SeekBar seekBar = findViewById(R.id.seekbar);
+        //Init num
+        seekBar.setProgress(0);
+        //max value
+        seekBar.setMax(100);
+        seekBar.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                        String str = String.format(Locale.US,"%d %%",i);
+                        textView.setText(str);
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
+                    }
                 }
-                else {
-                    textView.setText("World");
-                    flag = true;
-                }
-            }
-        });
+        );
 
 
     }
